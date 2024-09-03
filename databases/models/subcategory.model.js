@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
 const subCategorySchema = new mongoose.Schema({
     name: {
@@ -13,9 +13,9 @@ const subCategorySchema = new mongoose.Schema({
         lowercase: true
     },
     category: {
-        type: Types.ObjectId,
+        type: Schema.ObjectId,
         ref: 'category',
     }
-});
+}, {timestamps: true});
 const subCategoryModel = mongoose.model("subCategory",  subCategorySchema);
 export default subCategoryModel;
