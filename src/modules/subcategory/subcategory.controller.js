@@ -2,6 +2,7 @@ import slugify from "slugify";
 import subCategoryModel from "../../../databases/models/subcategory.model.js";
 import { catchError } from "../../utils/catchError.js"
 import { AppError } from "../../utils/AppError.js";
+import { deleteOne } from "../handlers/factor.js";
 export const addSubCategory = catchError(async (req, res, next) => {
     req.body.slug = slugify(req.body.name)
     const subCategory = new subCategoryModel(req.body);
@@ -19,10 +20,5 @@ export const updateSubCategory = catchError(async(req, res, next) => {
     !SubCategory && next(new AppError("SubCategory not found", 404));
     SubCategory && res.status(200).json({message: "Success", SubCategory})
 })
-export const deleteSubCategory = catchError(async(req, res, next) => {
-    const {id} = req.params;
-    let SubCategory = await subCategoryModel.findByIdAndDelete(id);
-    !SubCategory && next(new AppError("SubCategory not found", 404));
-    SubCategory && res.status(200).json({message: "Success", SubCategory})
-});
+export const deleteSubCategory = deleteOne(subCategoryModel, "SubCategory");
 

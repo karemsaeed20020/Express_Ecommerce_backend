@@ -2,6 +2,7 @@ import brandModel from "../../../databases/models/brand.model.js"
 import { AppError } from "../../utils/AppError.js";
 import { catchError } from "../../utils/catchError.js"
 import slugify from "slugify";
+import { deleteOne } from "../handlers/factor.js";
 export const addBrand = catchError(async (req, res, next) => {
     req.body.slug = slugify(req.body.name);
     const brand = new brandModel(req.body);
@@ -19,9 +20,4 @@ export const updateBrand = catchError(async (req, res, next) => {
     !Brand && next(new AppError("Brand not found", 404));
     Brand && res.status(200).json({message: "Success", Brand});
 })
-export const deleteBrand = catchError(async (req, res, next) => {
-    const {id} = req.params;
-    let Brand = await brandModel.findByIdAndDelete(id);
-    !Brand && next(new AppError("Brand not found", 404));
-    Brand && res.status(200).json({message: "Success", Brand});
-})
+export const deleteBrand = deleteOne(brandModel, "Brand");
