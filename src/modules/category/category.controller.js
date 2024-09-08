@@ -5,6 +5,7 @@ import { AppError } from "../../utils/AppError.js";
 import { deleteOne } from "../handlers/factor.js";
 export const addCategory = catchError(async (req, res) => {
   req.body.slug = slugify(req.body.name);
+  req.body.image = req.file.filename;
   const category = new categoryModel(req.body);
   await category.save();
   res.status(201).json({ message: "Success", category });
@@ -12,6 +13,10 @@ export const addCategory = catchError(async (req, res) => {
 
 export const getAllCategories = catchError(async (req, res) => {
   let categories = await categoryModel.find();
+  // categories.map((elm, index) => {
+  //    elm.image = "http:localhost:5000/category/" + elm.image
+  //    return elm;
+  // })
   res.status(200).json({ message: "Success", categories });
 });
 export const updateCategory = catchError(async (req, res, next) => {

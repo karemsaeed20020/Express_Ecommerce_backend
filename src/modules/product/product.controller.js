@@ -6,10 +6,20 @@ import { deleteOne } from "../handlers/factor.js";
 import { ApiFeatures } from "../../utils/ApiFeatures.js";
 
 export const createProduct = catchError(async (req, res, next) => {
+  
+
+  
+  console.log(req.files);
+  // Generate slug from the title
   req.body.slug = slugify(req.body.title);
+  req.body.imgCover = req.files.imgCover[0].filename;
+  req.body.images = req.files.images.map((elm) => elm.filename)
+
+  
   const product = new productModel(req.body);
   await product.save();
-  res.status(201).json({ message: "Success", product });
+
+  res.status(201).json({ message: "Product created successfully", product });
 });
 
 
