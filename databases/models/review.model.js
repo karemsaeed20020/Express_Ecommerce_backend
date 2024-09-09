@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const reviewSchema = new mongoose.Schema({
-    text: {
+    comment: {
         type: String,
         required: true,
         trim: true,
@@ -16,10 +16,14 @@ const reviewSchema = new mongoose.Schema({
         ref: "product",
         required: true,
     },
-    rate: {
+    ratings: {
         type: Number,
-        enum: [1, 2, 3, 4, 5]
+        min: 1,
+        max: 5
     }
 }, {timestamps: true});
+reviewSchema.pre("find", function() {
+    this.populate('user', 'name');
+})
 const reviewModel = mongoose.model("review", reviewSchema);
 export default reviewModel;
