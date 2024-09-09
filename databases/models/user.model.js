@@ -3,28 +3,32 @@ import bcrypt from 'bcryptjs';
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, 'user name is required'],
         unique: true,
-        trim: true
+        trim: true,
+        minLength: [1, "too short user name"]
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
+        required: [true, "email is required"],
+        unique: [true, "email must be unique"],
         trim: true,
     },
     password: {
         type: String,
         required: true,
+        minLength: [6, "minLength 6 characters"],
     },
     role: {
         type: String,
         enum: ["admin", "user"],
+        default: "user"
     },
     isActive: {
         type: Boolean,
         default: true,
     },
+    passwordChangedAt: Date,
     verified: {
         type: Boolean,
         default: false,
