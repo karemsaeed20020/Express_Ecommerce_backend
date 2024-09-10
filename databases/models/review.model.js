@@ -22,8 +22,8 @@ const reviewSchema = new mongoose.Schema({
         max: 5
     }
 }, {timestamps: true});
-reviewSchema.pre("find", function() {
-    this.populate('user', 'name');
+reviewSchema.pre(/^find/, function() {
+    this.populate('user', 'name -_id');
 })
 const reviewModel = mongoose.model("review", reviewSchema);
 export default reviewModel;

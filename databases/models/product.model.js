@@ -82,12 +82,19 @@ const productSchema = new mongoose.Schema(
       min: [0, "Rating count cannot be negative"],
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: {virtuals: true}, toObject: {virtuals: true} }
 );
 productSchema.post("init", function(doc) {
   doc.imgCover = process.env.BASE_URL + "product/" + doc.imgCover;
   doc.images = doc.images.map((elm) => process.env.BASE_URL+"product/"+elm)
 });
-
+productSchema.virtual('myReviews', {
+  ref: 'review',
+  localField: '_id',
+  foreignField: 'product',
+});
+productSchema.pre(/^find/, function() {
+  this.populate("myReviews")
+})
 const productModel = mongoose.model("product", productSchema);
 export default productModel;
