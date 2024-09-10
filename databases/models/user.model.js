@@ -36,7 +36,8 @@ const userSchema = new mongoose.Schema({
     blocked: {
         type: Boolean,
         default: false,
-    }
+    },
+    wishlist: [{type: mongoose.SchemaTypes.ObjectId, ref: "product"}]
 }, {timestamps: true})
 userSchema.pre("save", function() {
     this.password = bcrypt.hashSync(this.password, 8);
