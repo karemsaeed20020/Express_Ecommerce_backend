@@ -1,19 +1,22 @@
 import mongoose from 'mongoose';
+
 const couponSchema = new mongoose.Schema({
     code: {
         type: String,
-        required: true,
+        required: [true, 'coupon code is required'],
         trim: true,
+        unique: true
     },
     expires: {
         type: Date,
-        required: true,
+        required: [true, 'coupon date is required'],  // Ensure this is a valid Date
     },
     discount: {
         type: Number,
-        required: true,
+        required: [true, 'coupon discount is required'],
         min: 0
     }
-}, {timestamps: true})
-const couponModel = mongoose.model('coupon', couponSchema);
+}, {timestamps: true});
+
+const couponModel = mongoose.model('Coupon', couponSchema);
 export default couponModel;
