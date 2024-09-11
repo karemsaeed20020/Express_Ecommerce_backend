@@ -37,7 +37,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    wishlist: [{type: mongoose.SchemaTypes.ObjectId, ref: "product"}]
+    wishlist: [{type: mongoose.SchemaTypes.ObjectId, ref: "product"}],
+    addresses: [{
+        city: String,
+        street: String,
+        phone: String,
+    }]
 }, {timestamps: true})
 userSchema.pre("save", function() {
     this.password = bcrypt.hashSync(this.password, 8);

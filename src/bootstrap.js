@@ -8,6 +8,7 @@ import userRouter from "./modules/user/user.routes.js";
 import authRouter from "./modules/auth/auth.routes.js";
 import reviewRouter from "./modules/review/review.routes.js";
 import wishlistRouter from "./modules/wishlist/wishlist.routes.js";
+import addressRouter from "./modules/address/address.routes.js";
 const bootstrap = (app) => {
     app.use('/api/v1/categories', categoryRouter);
     app.use('/api/v1/subcategories', subCategoryRouter);
@@ -17,6 +18,7 @@ const bootstrap = (app) => {
     app.use('/api/v1/auth', authRouter);
     app.use('/api/v1/reviews', reviewRouter);
     app.use('/api/v1/wishlist', wishlistRouter);
+    app.use('/api/v1/addresses', addressRouter);
     app.all('*', (req, res, next) => {
         next(new AppError("not found endpoint", 404));
     });
