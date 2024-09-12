@@ -85,8 +85,9 @@ const productSchema = new mongoose.Schema(
   { timestamps: true, toJSON: {virtuals: true}, toObject: {virtuals: true} }
 );
 productSchema.post("init", function(doc) {
-  doc.imgCover = process.env.BASE_URL + "product/" + doc.imgCover;
-  doc.images = doc.images.map((elm) => process.env.BASE_URL+"product/"+elm)
+  if (doc.imgCover && doc.images) {    doc.imgCover = process.env.BASE_URL + "product/" + doc.imgCover;
+    doc.images = doc.images.map((elm) => process.env.BASE_URL+"product/"+elm)
+  }
 });
 productSchema.virtual('myReviews', {
   ref: 'review',

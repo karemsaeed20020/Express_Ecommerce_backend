@@ -10,6 +10,7 @@ import reviewRouter from "./modules/review/review.routes.js";
 import wishlistRouter from "./modules/wishlist/wishlist.routes.js";
 import addressRouter from "./modules/address/address.routes.js";
 import couponRouter from "./modules/coupon/coupon.routes.js";
+import cartRouter from "./modules/cart/cart.routes.js";
 const bootstrap = (app) => {
     app.use('/api/v1/categories', categoryRouter);
     app.use('/api/v1/subcategories', subCategoryRouter);
@@ -21,6 +22,7 @@ const bootstrap = (app) => {
     app.use('/api/v1/wishlist', wishlistRouter);
     app.use('/api/v1/addresses', addressRouter);
     app.use('/api/v1/coupons', couponRouter);
+    app.use('/api/v1/carts', cartRouter);
     app.all('*', (req, res, next) => {
         next(new AppError("not found endpoint", 404));
     });
